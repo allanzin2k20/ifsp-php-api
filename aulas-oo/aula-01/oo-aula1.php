@@ -6,12 +6,15 @@ $prod = new Product(null, null, "allan", 10);
 
 $prod->setName("allan");
 $prod->setPrice(20);
+$prod->name = "allan gabriel";
 
 echo "Valor = $ ";
 $prod->getPrice();
 
 echo "<br>nome = $ ";
 $prod->getName();
+
+echo '<br>Propriedades name: '.$prod->name;
 
 echo
 "<br>---------------------------------<br>";
