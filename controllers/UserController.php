@@ -1,11 +1,13 @@
 <?php
 class UserController{
     function signup(){
+        
         //pegar as entradas
         $name = $_POST['name'];
         $email = $_POST['email'];
         $pass = sha1($_POST['pass']);
         $avatar = $_POST['avatar'];
+
         //validar os campos
 
         //executar a operacao de banco
@@ -23,7 +25,7 @@ class UserController{
 
 
         $output = new Output();
-        $output->response($result);
+        $output->response($result, 202);
     }
 }
 ?> 

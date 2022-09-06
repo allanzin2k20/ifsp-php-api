@@ -26,5 +26,41 @@
     "headers": [],
     "params": [],
     "tests": []
+  },
+  {
+    "_id": "68feeee9-0ec0-4ead-bb15-13b5d4428029",
+    "colId": "history",
+    "containerId": "",
+    "name": "http://localhost/pj3/ifsp-php-api/user/sign-up",
+    "url": "http://localhost/pj3/ifsp-php-api/user/sign-up",
+    "method": "POST",
+    "sortNum": 0,
+    "created": "2022-09-06T18:12:38.069Z",
+    "modified": "2022-09-06T18:43:34.896Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "formdata",
+      "raw": "",
+      "form": [
+        {
+          "name": "name",
+          "value": "breno macho"
+        },
+        {
+          "name": "email",
+          "value": "brenomachado@gmail.com"
+        },
+        {
+          "name": "pass",
+          "value": "38879al$"
+        },
+        {
+          "name": "avatar",
+          "value": "https://suap.ifsp.edu.br/media/alunos/223534.UYbqnnvAEp4a.jpg"
+        }
+      ]
+    },
+    "tests": []
   }
 ]
