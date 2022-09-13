@@ -23,6 +23,19 @@ class UserController{
         $result["user"]["pass"] = $pass;
         $result["user"]["avatar"] = $avatar;
 
+        $output = new Output();
+        $output->response($result);
+    }
+
+    function list(){
+        $route = new Router();
+        $route->allowedMethod('GET');
+
+        $user = new User(null, null, null, null, null);
+        $listUsers = $user->list();
+
+        $result["success"]["message"] = "User list has been successfully listed!";
+        $result["data"] = $listUsers;
 
         $output = new Output();
         $output->response($result, 202);
