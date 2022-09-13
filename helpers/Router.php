@@ -1,4 +1,4 @@
-helpers/Router.php<?php
+<?php
 class Router {
 
     function gateKeeper(){
@@ -12,7 +12,8 @@ class Router {
         isset($urlArray[1]) && $urlArray[1] != ''
         ){
             $controller = $urlArray[0].'Controller';
-            $action = str_replace('-', '', $urlArray[1]);
+            $removeParams = explode('?',$urlArray[1]);
+            $action = str_replace('-', '', $removeParams[0]);
             if(file_exists(CONTROLLERS_FOLDER.$controller.'.php')){
                 $obj = new $controller();
                 if(method_exists($obj, $action)){

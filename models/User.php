@@ -50,6 +50,21 @@ class User {
         }
     }
 
+        function getById(){
+            $db = new Database();
+            $conn = $db->connect();
+    
+            try{
+                $stmt = $conn->prepare("SELECT * FROM users WHERE id = :id");
+                $stmt->bindParam(':id', $this->id);
+                $stmt->execute();
+                $user = $stmt->fetch(PDO::FETCH_ASSOC);
+                $conn = null;
+                return $user;
+            }catch(PDOException $e) {
+                $db->dbError($e);
+            }
+        }
 }
 
 ?>
