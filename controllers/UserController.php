@@ -1,6 +1,9 @@
 <?php
 class UserController{
     function signup(){
+
+        $route = new Router();
+        $route->allowedMethod('POST');
         
         //pegar as entradas
         $name = $_POST['name'];
