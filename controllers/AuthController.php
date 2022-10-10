@@ -30,5 +30,25 @@ class AuController extends Controller{
             Output::response($result, 401);
         }
     }
+
+        public function logout(){
+            Router::allowMethod('POST');
+
+            $data = input::getData();
+            $idUser = $data['id_user'];
+            $token = $data['token'];
+
+            $session = new Session(null, $idUser, $token, null);
+            $wasDeleted = $session->delete();
+
+            if($wasDeleted){
+                $result["success"]["message"] = "User logged out successfully!";
+                Output::response($result);
+        }else {
+            $result["error"]["message"] = "Error logging out! Please try again later!";
+            Output::response($result, 500);
+            output::response($result);
+        }
+    }
 }
 ?>

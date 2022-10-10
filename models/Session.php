@@ -29,5 +29,26 @@ class Session{
                 Database::dbError($e);
         }
     }
+
+     function delete(){
+                $conn = Database::connect();
+
+                try{
+                    $stmt = $conn->prepare("DELETE FROM sessions WHERE id_user = :id_user AND token = :token;");
+                    $stmt->bindParam(':id_user', $this->idUser);
+                    $stmt->bindParam(':token', $this->token);
+                    $stmt->execute();
+                    $rowsAffected = $stmt->rowCount();
+                    $conn = null;
+                    if ($rowsAffected > 0){
+                        return true;
+                } else {
+                    return false;
+                }
+            }catch(PDOException $e) {
+                Database::dbError($e);
+            }
+    }
+
 }
 ?>
