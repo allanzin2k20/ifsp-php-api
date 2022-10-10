@@ -1,7 +1,6 @@
 <?php
 class Output{
-    function response($arrayResponse, $statusCode = 200){
-
+    static function response($arrayResponse, $statusCode = 200){
         http_response_code($statusCode);
         header('Content-Type: application/json; charset=utf-8');
         header('Access-Control-Allow-Origin: '.ALLOWED_HOSTS);
@@ -9,9 +8,9 @@ class Output{
         die;
     }
 
-    function notFound(){
-        $result['message'] = "endereço da API invalido";
-        $this->response ($result, 404);
-        }
+    static function notFound(){
+        $result["error"]['message'] = "API endpoint not found!";
+        self::response($result, 404);
+    }
 }
 ?>

@@ -1,72 +1,102 @@
 <?php
 class UserController{
     function signup(){
-
-        $route = new Router();
-        $route->allowedMethod('POST');
+        Router::allowedMethod('POST');
         
-        //pegar as entradas
-        $name = $_POST['name'];
-        $email = $_POST['email'];
-        $pass = sha1($_POST['pass']);
-        $avatar = $_POST['avatar'];
+        $data = Input::getData();
+        $name = $data['name'];
+        $email = $data['email'];
+        $pass = sha1($data['pass']);
+        $avatar = $data['avatar'];
 
-        //validar os campos
+        //TODO validar os campos
 
-        //executar a operacao de banco
         $user = new User(null, $name, $email, $pass, $avatar);
         $id = $user->create();
 
-        //dar a saida
         $result["success"]["message"] = "User created successfully!";
-
+        $result["user"] = $data;
         $result["user"]["id"] = $id;
-        $result["user"]["name"] = $name;
-        $result["user"]["email"] = $email;
-        $result["user"]["pass"] = $pass;
-        $result["user"]["avatar"] = $avatar;
-
-        $output = new Output();
-        $output->response($result);
+        Output::response($result);
     }
 
     function list(){
-        $route = new Router();
-        $route->allowedMethod('GET');
+        Router::allowedMethod('GET');
 
         $user = new User(null, null, null, null, null);
         $listUsers = $user->list();
 
         $result["success"]["message"] = "User list has been successfully listed!";
         $result["data"] = $listUsers;
-
-        $output = new Output();
-        $output->response($result, 202);
+        Output::response($result);
     }
 
     function byId(){
-        $route = new Router();
-        $route->allowedMethod('GET');
+        Router::allowedMethod('GET');
 
-        $output = new Output();
         if(isset($_GET['id'])){
             $id = $_GET['id'];
-       }else{
-        $result['error']['message'] = 'Id parameter is required!';
-        $output->response($result, 406);
-       }
-           
-            $user = new User($id, null, null, null, null);
-            $userById = $user->getById();
-       
-            if($userById){
-                $result["success"]["message"] = "User has been successfully selectd!";
-                $result["data"] = $userById;
-                $output->response($result);
-            }else{
-                $result['error']['message'] = 'User not found!';
-                $output->response($result, 404);
-            }
+        } else {
+            $result['error']['message'] = "Id parameter required!";
+            Output::response($result, 406);
+        }
+        
+        $user = new User($id, null, null, null, null);
+        $userData = $user->getById();
+
+        if($userData){
+            $result["success"]["message"] = "User successfully selected!";
+            $result["data"] = $userData;
+            Output::response($result);
+        } else {
+            $result["error"]["message"] = "User not found!";
+            Output::response($result, 404);
         }
     }
+
+    function delete(){
+        Router::allowedMethod('DELETE');
+        $data = Input::getData();
+
+        if(isset($data['id'])){
+            $id = $data['id'];
+        } else {
+            $result['error']['message'] = "Id parameter required!";
+            Output::response($result, 406);
+        }
+
+        $user = new User($id, null, null, null, null);
+        $deleted = $user->delete();
+
+        if($deleted){
+            $result["success"]["message"] = "User $id deleted successfully!";
+            Output::response($result);
+        } else {
+            $result["error"]["message"] = "User $id not found to be deleted!";
+            Output::response($result, 404);
+        }
+    }
+
+    function update(){
+        Router::allowedMethod('PUT');
+        
+        $data = Input::getData();
+        $id = $data['id'];
+        $name = $data['name'];
+        $email = $data['email'];
+        $avatar = $data['avatar'];
+
+        $user = new User($id, $name, $email, null, $avatar);
+        $updated = $user->update();
+
+        if($updated){
+            $result["success"]["message"] = "User updated successfully!";
+            $result["user"] = $data;
+            Output::response($result);
+        } else {
+            $result["error"]["message"] = "User $id not found to be updated!";
+            Output::response($result, 404);
+        }
+    }
+}
 ?> 
